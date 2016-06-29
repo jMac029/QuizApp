@@ -23,6 +23,7 @@ class ViewController: UIViewController {
     var previousQuestionsArray: [Int] = []
     
     var gameSound: SystemSoundID = 0
+    // global variables for the two additional sound effects
     var gameSoundCorrect: SystemSoundID = 0
     var gameSoundWrong: SystemSoundID = 0
     
@@ -106,7 +107,7 @@ class ViewController: UIViewController {
             loadGameSoundCorrect()
             playGameSoundCorrect()
         } else {
-            questionField.text = "Sorry, wrong answer!"
+            questionField.text = "Sorry, wrong answer! \n\n Correct Answer: \(correctAnswer)"
             loadGameSoundWrong()
             playGameSoundWrong()
         }
@@ -165,7 +166,7 @@ class ViewController: UIViewController {
         AudioServicesPlaySystemSound(gameSound)
     }
     
-    // Adding new soundeffects
+    // Adding new soundeffects functions
     
     func loadGameSoundCorrect() {
         let pathToSoundFile = NSBundle.mainBundle().pathForResource("GameSoundCorrect", ofType: "wav")
