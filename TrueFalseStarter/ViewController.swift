@@ -22,16 +22,11 @@ class ViewController: UIViewController {
     
     var gameSound: SystemSoundID = 0
     
-    let trivia: [[String : String]] = [
-        ["Question": "Only female koalas can whistle", "Answer": "False"],
-        ["Question": "Blue whales are technically whales", "Answer": "True"],
-        ["Question": "Camels are cannibalistic", "Answer": "False"],
-        ["Question": "All ducks are birds", "Answer": "True"]
-    ]
-    
     @IBOutlet weak var questionField: UILabel!
-    @IBOutlet weak var trueButton: UIButton!
-    @IBOutlet weak var falseButton: UIButton!
+    @IBOutlet weak var firstChoiceButton: UIButton!
+    @IBOutlet weak var secondChoiceButton: UIButton!
+    @IBOutlet weak var thirdChoiceButton: UIButton!
+    @IBOutlet weak var fourthChoiceButton: UIButton!
     @IBOutlet weak var playAgainButton: UIButton!
     
 
@@ -53,12 +48,28 @@ class ViewController: UIViewController {
         let triviaQuestion = olympicTriviaQuestions[indexOfSelectedQuestion]
         questionField.text = triviaQuestion.question
         playAgainButton.hidden = true
+        
+        // Enable Buttons
+        
+        firstChoiceButton.userInteractionEnabled = true
+        secondChoiceButton.userInteractionEnabled = true
+        thirdChoiceButton.userInteractionEnabled = true
+        fourthChoiceButton.userInteractionEnabled = true
+        
+        // Display choice text in answer buttons
+        
+        firstChoiceButton.setTitle(triviaQuestion.firstChoice, forState: .Normal)
+        secondChoiceButton.setTitle(triviaQuestion.secondChoice, forState: .Normal)
+        thirdChoiceButton.setTitle(triviaQuestion.thirdChoice, forState: .Normal)
+        fourthChoiceButton.setTitle(triviaQuestion.fourthChoice, forState: .Normal)
     }
     
     func displayScore() {
         // Hide the answer buttons
-        trueButton.hidden = true
-        falseButton.hidden = true
+        firstChoiceButton.hidden = true
+        secondChoiceButton.hidden = true
+        thirdChoiceButton.hidden = true
+        fourthChoiceButton.hidden = true
         
         // Display play again button
         playAgainButton.hidden = false
@@ -71,17 +82,17 @@ class ViewController: UIViewController {
         // Increment the questions asked counter
         questionsAsked += 1
         
-        let selectedQuestionDict = trivia[indexOfSelectedQuestion]
-        let correctAnswer = selectedQuestionDict["Answer"]
+        let selectedQuestionDict = olympicTriviaQuestions[indexOfSelectedQuestion]
+        let correctAnswer = selectedQuestionDict.correctAnswer
         
-        if (sender === trueButton &&  correctAnswer == "True") || (sender === falseButton && correctAnswer == "False") {
+        if sender.titleLabel!.text == correctAnswer {
             correctQuestions += 1
             questionField.text = "Correct!"
         } else {
             questionField.text = "Sorry, wrong answer!"
         }
         
-        loadNextRoundWithDelay(seconds: 2)
+        loadNextRoundWithDelay(seconds: 3)
     }
     
     func nextRound() {
@@ -96,8 +107,10 @@ class ViewController: UIViewController {
     
     @IBAction func playAgain() {
         // Show the answer buttons
-        trueButton.hidden = false
-        falseButton.hidden = false
+        firstChoiceButton.hidden = false
+        secondChoiceButton.hidden = false
+        thirdChoiceButton.hidden = false
+        fourthChoiceButton.hidden = false
         
         questionsAsked = 0
         correctQuestions = 0
