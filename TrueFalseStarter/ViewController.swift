@@ -23,6 +23,8 @@ class ViewController: UIViewController {
     var previousQuestionsArray: [Int] = []
     
     var gameSound: SystemSoundID = 0
+    var gameSoundCorrect: SystemSoundID = 0
+    var gameSoundWrong: SystemSoundID = 0
     
     @IBOutlet weak var questionField: UILabel!
     @IBOutlet weak var firstChoiceButton: UIButton!
@@ -101,11 +103,15 @@ class ViewController: UIViewController {
         if sender.titleLabel!.text == correctAnswer {
             correctQuestions += 1
             questionField.text = "Correct!"
+            loadGameSoundCorrect()
+            playGameSoundCorrect()
         } else {
             questionField.text = "Sorry, wrong answer!"
+            loadGameSoundWrong()
+            playGameSoundWrong()
         }
         
-        loadNextRoundWithDelay(seconds: 3)
+        loadNextRoundWithDelay(seconds: 2)
     }
     
     func nextRound() {
@@ -127,7 +133,10 @@ class ViewController: UIViewController {
         
         questionsAsked = 0
         correctQuestions = 0
+        previousQuestionsArray.removeAll()
+        playGameStartSound()
         nextRound()
+        
     }
     
 
@@ -154,6 +163,28 @@ class ViewController: UIViewController {
     
     func playGameStartSound() {
         AudioServicesPlaySystemSound(gameSound)
+    }
+    
+    // Adding new soundeffects
+    
+    func loadGameSoundCorrect() {
+        let pathToSoundFile = NSBundle.mainBundle().pathForResource("GameSoundCorrect", ofType: "wav")
+        let soundURL = NSURL(fileURLWithPath: pathToSoundFile!)
+        AudioServicesCreateSystemSoundID(soundURL, &gameSoundCorrect)
+    }
+    
+    func playGameSoundCorrect() {
+        AudioServicesPlaySystemSound(gameSoundCorrect)
+    }
+    
+    func loadGameSoundWrong() {
+        let pathToSoundFile = NSBundle.mainBundle().pathForResource("GameSoundWrong", ofType: "wav")
+        let soundURL = NSURL(fileURLWithPath: pathToSoundFile!)
+        AudioServicesCreateSystemSoundID(soundURL, &gameSoundWrong)
+    }
+    
+    func playGameSoundWrong() {
+        AudioServicesPlaySystemSound(gameSoundWrong)
     }
 }
 

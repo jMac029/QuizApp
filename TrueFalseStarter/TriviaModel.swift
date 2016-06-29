@@ -15,11 +15,11 @@ class Trivia {
     let question: String
     let firstChoice: String
     let secondChoice: String
-    let thirdChoice: String
-    let fourthChoice: String
+    let thirdChoice: String?
+    let fourthChoice: String?
     let correctAnswer: String
     
-    init(question: String, firstChoice: String, secondChoice: String, thirdChoice: String, fourthChoice: String, correctAnswer: String) {
+    init(question: String, firstChoice: String, secondChoice: String, thirdChoice: String?, fourthChoice: String?, correctAnswer: String) {
         self.question = question
         self.firstChoice = firstChoice
         self.secondChoice = secondChoice
@@ -100,22 +100,22 @@ let triviaQuestion09 = Trivia(question: "The Summer Games in 2020 are to be held
 let triviaQuestion10 = Trivia(question: "London was the first city to host the Summer Olympics three times.",
                               firstChoice: "True",
                               secondChoice: "False",
-                              thirdChoice: "---",
-                              fourthChoice: "---",
+                              thirdChoice: nil,
+                              fourthChoice: nil,
                               correctAnswer: "True")
 
 let triviaQuestion11 = Trivia(question: "The 2016 Summer Games will be the first ever in South America.",
                               firstChoice: "True",
                               secondChoice: "False",
-                              thirdChoice: "---",
-                              fourthChoice: "---",
+                              thirdChoice: nil,
+                              fourthChoice: nil,
                               correctAnswer: "True")
 
 let triviaQuestion12 = Trivia(question: "English, Greek and French are the offical languages of the Olympic Games.",
                               firstChoice: "True",
                               secondChoice: "False",
-                              thirdChoice: "---",
-                              fourthChoice: "---",
+                              thirdChoice: nil,
+                              fourthChoice: nil,
                               correctAnswer: "True")
 
 let olympicTriviaQuestions = [triviaQuestion01,
