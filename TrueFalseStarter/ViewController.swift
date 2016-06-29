@@ -15,10 +15,12 @@ import AudioToolbox
 
 class ViewController: UIViewController {
     
+    // removed the 'magic number' of 4 that was in the starter and replaced with .count to adjust to the amount of questions in the TriviaModel
     let questionsPerRound = olympicTriviaQuestions.count
     var questionsAsked = 0
     var correctQuestions = 0
     var indexOfSelectedQuestion: Int = 0
+    var previousQuestionsArray: [Int] = []
     
     var gameSound: SystemSoundID = 0
     
@@ -44,10 +46,21 @@ class ViewController: UIViewController {
     }
     
     func displayQuestion() {
+        
         indexOfSelectedQuestion = GKRandomSource.sharedRandom().nextIntWithUpperBound(olympicTriviaQuestions.count)
-        let triviaQuestion = olympicTriviaQuestions[indexOfSelectedQuestion]
-        questionField.text = triviaQuestion.question
+        
+        // while loop for making sure that questions are not repeated
+        while previousQuestionsArray.contains(indexOfSelectedQuestion) {
+            indexOfSelectedQuestion = GKRandomSource.sharedRandom().nextIntWithUpperBound(olympicTriviaQuestions.count)
+        }
+        
+        // appending global previousQuestionsArray varialbe with asked questions so that they are not repeated
+        previousQuestionsArray.append(indexOfSelectedQuestion)
+        
+        let triviaQuestions = olympicTriviaQuestions[indexOfSelectedQuestion]
+        questionField.text = triviaQuestions.question
         playAgainButton.hidden = true
+        
         
         // Enable Buttons
         
@@ -58,10 +71,10 @@ class ViewController: UIViewController {
         
         // Display choice text in answer buttons
         
-        firstChoiceButton.setTitle(triviaQuestion.firstChoice, forState: .Normal)
-        secondChoiceButton.setTitle(triviaQuestion.secondChoice, forState: .Normal)
-        thirdChoiceButton.setTitle(triviaQuestion.thirdChoice, forState: .Normal)
-        fourthChoiceButton.setTitle(triviaQuestion.fourthChoice, forState: .Normal)
+        firstChoiceButton.setTitle(triviaQuestions.firstChoice, forState: .Normal)
+        secondChoiceButton.setTitle(triviaQuestions.secondChoice, forState: .Normal)
+        thirdChoiceButton.setTitle(triviaQuestions.thirdChoice, forState: .Normal)
+        fourthChoiceButton.setTitle(triviaQuestions.fourthChoice, forState: .Normal)
     }
     
     func displayScore() {
