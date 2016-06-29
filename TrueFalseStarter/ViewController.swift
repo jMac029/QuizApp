@@ -156,6 +156,22 @@ class ViewController: UIViewController {
         }
     }
     
+    func loadNextQuestionTimer(seconds seconds: Int) {
+        // Converts a delay in seconds to nanoseconds as signed 64 bit integer
+        let timer = Int64(NSEC_PER_SEC * UInt64(seconds))
+        // Calculates a time value to execute the method given current time and delay
+        let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, timer)
+        
+        // Executes the nextRound method at the dispatch time on the main queue
+        dispatch_after(dispatchTime, dispatch_get_main_queue()) {
+            self.nextRound()
+        }
+        
+        //loads next question
+        
+        loadNextRoundWithDelay(seconds: 2)
+    }
+    
     func loadGameStartSound() {
         let pathToSoundFile = NSBundle.mainBundle().pathForResource("GameSound", ofType: "wav")
         let soundURL = NSURL(fileURLWithPath: pathToSoundFile!)
@@ -166,7 +182,7 @@ class ViewController: UIViewController {
         AudioServicesPlaySystemSound(gameSound)
     }
     
-    // Adding new soundeffects functions
+    // Adding new soundeffects helper methods
     
     func loadGameSoundCorrect() {
         let pathToSoundFile = NSBundle.mainBundle().pathForResource("GameSoundCorrect", ofType: "wav")
