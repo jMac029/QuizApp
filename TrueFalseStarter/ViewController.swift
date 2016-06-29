@@ -15,7 +15,7 @@ import AudioToolbox
 
 class ViewController: UIViewController {
     
-    let questionsPerRound = 4
+    let questionsPerRound = olympicTriviaQuestions.count
     var questionsAsked = 0
     var correctQuestions = 0
     var indexOfSelectedQuestion: Int = 0
@@ -49,9 +49,9 @@ class ViewController: UIViewController {
     }
     
     func displayQuestion() {
-        indexOfSelectedQuestion = GKRandomSource.sharedRandom().nextIntWithUpperBound(trivia.count)
-        let questionDictionary = trivia[indexOfSelectedQuestion]
-        questionField.text = questionDictionary["Question"]
+        indexOfSelectedQuestion = GKRandomSource.sharedRandom().nextIntWithUpperBound(olympicTriviaQuestions.count)
+        let triviaQuestion = olympicTriviaQuestions[indexOfSelectedQuestion]
+        questionField.text = triviaQuestion.question
         playAgainButton.hidden = true
     }
     
