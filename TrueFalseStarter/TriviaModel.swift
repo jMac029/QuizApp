@@ -15,11 +15,11 @@ class Trivia {
     let question: String
     let firstChoice: String
     let secondChoice: String
-    let thirdChoice: String?
-    let fourthChoice: String?
+    let thirdChoice: String
+    let fourthChoice: String
     let correctAnswer: String
     
-    init(question: String, firstChoice: String, secondChoice: String, thirdChoice: String?, fourthChoice: String?, correctAnswer: String) {
+    init(question: String, firstChoice: String, secondChoice: String, thirdChoice: String, fourthChoice: String, correctAnswer: String) {
         self.question = question
         self.firstChoice = firstChoice
         self.secondChoice = secondChoice
@@ -97,26 +97,26 @@ let triviaQuestion09 = Trivia(question: "The Summer Games in 2020 are to be held
 
 //last three questions are True/False questions in order to display a different amount of answers on the view
 
-let triviaQuestion10 = Trivia(question: "London was the first city to host the Summer Olympics three times.",
-                              firstChoice: "True",
-                              secondChoice: "False",
-                              thirdChoice: nil,
-                              fourthChoice: nil,
-                              correctAnswer: "True")
+let triviaQuestion10 = Trivia(question: "What is the only Olympic sport in which men and women compete against each other?",
+                              firstChoice: "Tennis",
+                              secondChoice: "Basketball",
+                              thirdChoice: "Field Hockey",
+                              fourthChoice: "Equestrian",
+                              correctAnswer: "Equestrian")
 
-let triviaQuestion11 = Trivia(question: "The 2016 Summer Games will be the first ever in South America.",
-                              firstChoice: "True",
-                              secondChoice: "False",
-                              thirdChoice: nil,
-                              fourthChoice: nil,
-                              correctAnswer: "True")
+let triviaQuestion11 = Trivia(question: "What Olympic Sport has the USA never won a medal in?",
+                              firstChoice: "Badminton",
+                              secondChoice: "Field Hockey",
+                              thirdChoice: "Table Tennis",
+                              fourthChoice: "Handball",
+                              correctAnswer: "Badminton")
 
-let triviaQuestion12 = Trivia(question: "English, Greek and French are the offical languages of the Olympic Games.",
-                              firstChoice: "True",
-                              secondChoice: "False",
-                              thirdChoice: nil,
-                              fourthChoice: nil,
-                              correctAnswer: "True")
+let triviaQuestion12 = Trivia(question: "When was the first Olympic torch relay held?",
+                              firstChoice: "1896",
+                              secondChoice: "1948",
+                              thirdChoice: "1920",
+                              fourthChoice: "1936",
+                              correctAnswer: "1936")
 
 let olympicTriviaQuestions = [triviaQuestion01,
                               triviaQuestion02,
