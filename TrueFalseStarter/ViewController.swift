@@ -22,10 +22,18 @@ class ViewController: UIViewController {
     var indexOfSelectedQuestion: Int = 0
     var previousQuestionsArray: [Int] = []
     
+    // Sound Effects Variables
+    
     var gameSound: SystemSoundID = 0
     // global variables for the two additional sound effects
     var gameSoundCorrect: SystemSoundID = 0
     var gameSoundWrong: SystemSoundID = 0
+    
+    // Lightning Timer Variables
+    
+    var lightningTimer = NSTimer()
+    var seconds = 15
+    var timerRunning = false
     
     @IBOutlet weak var questionField: UILabel!
     @IBOutlet weak var firstChoiceButton: UIButton!
@@ -33,6 +41,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var thirdChoiceButton: UIButton!
     @IBOutlet weak var fourthChoiceButton: UIButton!
     @IBOutlet weak var playAgainButton: UIButton!
+    @IBOutlet weak var timerLabel: UILabel!
     
 
     override func viewDidLoad() {
@@ -65,12 +74,7 @@ class ViewController: UIViewController {
         playAgainButton.hidden = true
         
         
-        // Enable Buttons
-        
-        firstChoiceButton.userInteractionEnabled = true
-        secondChoiceButton.userInteractionEnabled = true
-        thirdChoiceButton.userInteractionEnabled = true
-        fourthChoiceButton.userInteractionEnabled = true
+        enableButtons()
         
         // Display choice text in answer buttons
         
@@ -78,6 +82,9 @@ class ViewController: UIViewController {
         secondChoiceButton.setTitle(triviaQuestions.secondChoice, forState: .Normal)
         thirdChoiceButton.setTitle(triviaQuestions.thirdChoice, forState: .Normal)
         fourthChoiceButton.setTitle(triviaQuestions.fourthChoice, forState: .Normal)
+        
+        resetTimer()
+        beginTimer()
     }
     
     func displayScore() {
@@ -86,12 +93,24 @@ class ViewController: UIViewController {
         secondChoiceButton.hidden = true
         thirdChoiceButton.hidden = true
         fourthChoiceButton.hidden = true
+        timerLabel.hidden = true
         
         // Display play again button
         playAgainButton.hidden = false
         
-        questionField.text = "Way to go!\nYou got \(correctQuestions) out of \(questionsPerRound) correct!"
+        if correctQuestions == questionsAsked {
+            questionField.text = "You've won the GOLD!\nYou got \(correctQuestions) out of \(questionsPerRound) correct!"
         
+        } else if correctQuestions <= 11 && correctQuestions >= 10 {
+            questionField.text = "You've won the SILVER!\n You got \(correctQuestions) out of \(questionsPerRound)"
+            
+        } else if correctQuestions <= 9 && correctQuestions >= 8 {
+            questionField.text = "You've won the BRONZE!\n You got \(correctQuestions) out of \(questionsPerRound)"
+            
+        } else {
+            questionField.text = "Try Again!\n You got \(correctQuestions) out of \(questionsPerRound)"
+        }
+
     }
     
     @IBAction func checkAnswer(sender: UIButton) {
@@ -104,21 +123,27 @@ class ViewController: UIViewController {
         if sender.titleLabel!.text == correctAnswer {
             correctQuestions += 1
             questionField.text = "Correct!"
+            disableButtons()
             loadGameSoundCorrect()
             playGameSoundCorrect()
+            lightningTimer.invalidate()
         } else {
             questionField.text = "Sorry, wrong answer! \n\n Correct Answer: \(correctAnswer)"
             loadGameSoundWrong()
             playGameSoundWrong()
+            disableButtons()
+            lightningTimer.invalidate()
         }
         
-        loadNextRoundWithDelay(seconds: 2)
+        loadNextRoundWithDelay(seconds: 3)
     }
     
     func nextRound() {
         if questionsAsked == questionsPerRound {
             // Game is over
             displayScore()
+            lightningTimer.invalidate()
+            resetTimer()
         } else {
             // Continue game
             displayQuestion()
@@ -131,6 +156,7 @@ class ViewController: UIViewController {
         secondChoiceButton.hidden = false
         thirdChoiceButton.hidden = false
         fourthChoiceButton.hidden = false
+        timerLabel.hidden = false
         
         questionsAsked = 0
         correctQuestions = 0
@@ -140,9 +166,78 @@ class ViewController: UIViewController {
         
     }
     
+    // Lightning Timer Methods
+    
+    func beginTimer() {
+        
+        if timerRunning == false {
+            
+            lightningTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(ViewController.countdownTimer), userInfo: nil, repeats: true)
+            
+            timerRunning = true
+        }
+    }
+    
+    func countdownTimer() {
+        
+        let selectedQuestionDict = olympicTriviaQuestions[indexOfSelectedQuestion]
+        let correctAnswer = selectedQuestionDict.correctAnswer
+        
+        // countdown by 1 second
+        
+        seconds -= 1
+        
+        timerLabel.text = "Seconds Remaining: \(seconds)"
+        
+        if seconds == 0 {
+            
+            lightningTimer.invalidate()
+            
+            questionsAsked += 1
+            
+            questionField.text = "Sorry, time ran out! \n\n Correct Answer: \(correctAnswer)"
+            
+            loadGameSoundWrong()
+            playGameSoundWrong()
+            
+            disableButtons()
+            
+            loadNextRoundWithDelay(seconds: 3)
+            
+        }
+        
+    }
+    
+    func resetTimer() {
+        
+        seconds = 15
+        timerLabel.text = "Seconds Remaining: \(seconds)"
+        timerRunning = false
+        
+    }
 
     
     // MARK: Helper Methods
+    
+    // Helper Method to enable and disable the buttons after user has answered a question or began another
+    
+    func enableButtons() {
+        
+        firstChoiceButton.userInteractionEnabled = true
+        secondChoiceButton.userInteractionEnabled = true
+        thirdChoiceButton.userInteractionEnabled = true
+        fourthChoiceButton.userInteractionEnabled = true
+        
+    }
+    
+    func disableButtons() {
+        
+        firstChoiceButton.userInteractionEnabled = false
+        secondChoiceButton.userInteractionEnabled = false
+        thirdChoiceButton.userInteractionEnabled = false
+        fourthChoiceButton.userInteractionEnabled = false
+        
+    }
     
     func loadNextRoundWithDelay(seconds seconds: Int) {
         // Converts a delay in seconds to nanoseconds as signed 64 bit integer
@@ -154,23 +249,10 @@ class ViewController: UIViewController {
         dispatch_after(dispatchTime, dispatch_get_main_queue()) {
             self.nextRound()
         }
+        
     }
     
-    func loadNextQuestionTimer(seconds seconds: Int) {
-        // Converts a delay in seconds to nanoseconds as signed 64 bit integer
-        let timer = Int64(NSEC_PER_SEC * UInt64(seconds))
-        // Calculates a time value to execute the method given current time and delay
-        let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, timer)
-        
-        // Executes the nextRound method at the dispatch time on the main queue
-        dispatch_after(dispatchTime, dispatch_get_main_queue()) {
-            self.nextRound()
-        }
-        
-        //loads next question
-        
-        loadNextRoundWithDelay(seconds: 2)
-    }
+    
     
     func loadGameStartSound() {
         let pathToSoundFile = NSBundle.mainBundle().pathForResource("GameSound", ofType: "wav")
