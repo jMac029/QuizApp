@@ -25,9 +25,12 @@ class ViewController: UIViewController {
     // Sound Effects Variables
     
     var gameSound: SystemSoundID = 0
-    // global variables for the two additional sound effects
+    // global variables for the additional sound effects
     var gameSoundCorrect: SystemSoundID = 0
     var gameSoundWrong: SystemSoundID = 0
+    var gameSoundFinished: SystemSoundID = 0
+    var gameSoundRetry: SystemSoundID = 0
+    var gameSoundTimerEnd: SystemSoundID = 0
     
     // Lightning Timer Variables
     
@@ -56,6 +59,17 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    // locking screen orientation into Portrait Mode only
+    
+    override func shouldAutorotate() -> Bool {
+        return false
+    }
+    
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.Portrait
+    }
+    
     
     func displayQuestion() {
         
@@ -100,15 +114,23 @@ class ViewController: UIViewController {
         
         if correctQuestions == questionsAsked {
             questionField.text = "You've won the GOLD!\nYou got \(correctQuestions) out of \(questionsPerRound) correct!"
+            loadGameSoundFinished()
+            playGameSoundFinished()
         
         } else if correctQuestions <= 11 && correctQuestions >= 10 {
             questionField.text = "You've won the SILVER!\n You got \(correctQuestions) out of \(questionsPerRound)"
+            loadGameSoundFinished()
+            playGameSoundFinished()
             
         } else if correctQuestions <= 9 && correctQuestions >= 8 {
             questionField.text = "You've won the BRONZE!\n You got \(correctQuestions) out of \(questionsPerRound)"
+            loadGameSoundFinished()
+            playGameSoundFinished()
             
         } else {
             questionField.text = "Try Again!\n You got \(correctQuestions) out of \(questionsPerRound)"
+            loadGameSoundRetry()
+            playGameSoundRetry()
         }
 
     }
@@ -197,8 +219,8 @@ class ViewController: UIViewController {
             
             questionField.text = "Sorry, time ran out! \n\n Correct Answer: \(correctAnswer)"
             
-            loadGameSoundWrong()
-            playGameSoundWrong()
+            loadGameSoundTimerEnd()
+            playGameSoundTimerEnd()
             
             disableButtons()
             
@@ -284,6 +306,36 @@ class ViewController: UIViewController {
     
     func playGameSoundWrong() {
         AudioServicesPlaySystemSound(gameSoundWrong)
+    }
+    
+    func loadGameSoundTimerEnd() {
+        let pathToSoundFile = NSBundle.mainBundle().pathForResource("GameSoundTimerEnd", ofType: "wav")
+        let soundURL = NSURL(fileURLWithPath: pathToSoundFile!)
+        AudioServicesCreateSystemSoundID(soundURL, &gameSoundTimerEnd)
+    }
+    
+    func playGameSoundTimerEnd() {
+        AudioServicesPlaySystemSound(gameSoundTimerEnd)
+    }
+    
+    func loadGameSoundFinished() {
+        let pathToSoundFile = NSBundle.mainBundle().pathForResource("GameSoundFinished", ofType: "wav")
+        let soundURL = NSURL(fileURLWithPath: pathToSoundFile!)
+        AudioServicesCreateSystemSoundID(soundURL, &gameSoundFinished)
+    }
+    
+    func playGameSoundFinished() {
+        AudioServicesPlaySystemSound(gameSoundFinished)
+    }
+    
+    func loadGameSoundRetry() {
+        let pathToSoundFile = NSBundle.mainBundle().pathForResource("GameSoundRetry", ofType: "wav")
+        let soundURL = NSURL(fileURLWithPath: pathToSoundFile!)
+        AudioServicesCreateSystemSoundID(soundURL, &gameSoundRetry)
+    }
+    
+    func playGameSoundRetry() {
+        AudioServicesPlaySystemSound(gameSoundRetry)
     }
 }
 

@@ -95,8 +95,6 @@ let triviaQuestion09 = Trivia(question: "The Summer Games in 2020 are to be held
                               fourthChoice: "Moscow",
                               correctAnswer: "Tokyo")
 
-//last three questions are True/False questions in order to display a different amount of answers on the view
-
 let triviaQuestion10 = Trivia(question: "What is the only Olympic sport in which men and women compete against each other?",
                               firstChoice: "Tennis",
                               secondChoice: "Basketball",

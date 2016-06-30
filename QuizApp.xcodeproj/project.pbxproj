@@ -14,6 +14,9 @@
 		97093D431C913506001275BC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97093D421C913506001275BC /* Assets.xcassets */; };
 		97093D461C913506001275BC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97093D441C913506001275BC /* LaunchScreen.storyboard */; };
 		97093D531C932116001275BC /* GameSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 97093D521C932116001275BC /* GameSound.wav */; };
+		DF98E52D1D25893800D13766 /* GameSoundFinished.wav in Resources */ = {isa = PBXBuildFile; fileRef = DF98E52C1D25893800D13766 /* GameSoundFinished.wav */; };
+		DF98E52F1D258A0600D13766 /* GameSoundRetry.wav in Resources */ = {isa = PBXBuildFile; fileRef = DF98E52E1D258A0600D13766 /* GameSoundRetry.wav */; };
+		DF98E5311D258BCF00D13766 /* GameSoundTimerEnd.wav in Resources */ = {isa = PBXBuildFile; fileRef = DF98E5301D258BCF00D13766 /* GameSoundTimerEnd.wav */; };
 		DFB805961D24748200765338 /* GameSoundWrong.wav in Resources */ = {isa = PBXBuildFile; fileRef = DFB805941D24748200765338 /* GameSoundWrong.wav */; };
 		DFB805971D24748200765338 /* GameSoundCorrect.wav in Resources */ = {isa = PBXBuildFile; fileRef = DFB805951D24748200765338 /* GameSoundCorrect.wav */; };
 /* End PBXBuildFile section */
@@ -28,6 +31,9 @@
 		97093D451C913506001275BC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97093D471C913506001275BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		97093D521C932116001275BC /* GameSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = GameSound.wav; sourceTree = "<group>"; };
+		DF98E52C1D25893800D13766 /* GameSoundFinished.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = GameSoundFinished.wav; sourceTree = "<group>"; };
+		DF98E52E1D258A0600D13766 /* GameSoundRetry.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = GameSoundRetry.wav; sourceTree = "<group>"; };
+		DF98E5301D258BCF00D13766 /* GameSoundTimerEnd.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = GameSoundTimerEnd.wav; sourceTree = "<group>"; };
 		DFB805941D24748200765338 /* GameSoundWrong.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = GameSoundWrong.wav; sourceTree = "<group>"; };
 		DFB805951D24748200765338 /* GameSoundCorrect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = GameSoundCorrect.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -71,6 +77,9 @@
 				DFB805941D24748200765338 /* GameSoundWrong.wav */,
 				DFB805951D24748200765338 /* GameSoundCorrect.wav */,
 				97093D521C932116001275BC /* GameSound.wav */,
+				DF98E52C1D25893800D13766 /* GameSoundFinished.wav */,
+				DF98E52E1D258A0600D13766 /* GameSoundRetry.wav */,
+				DF98E5301D258BCF00D13766 /* GameSoundTimerEnd.wav */,
 				891B7E691D23704C00633014 /* TriviaModel.swift */,
 			);
 			name = QuizApp;
@@ -135,12 +144,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF98E5311D258BCF00D13766 /* GameSoundTimerEnd.wav in Resources */,
 				97093D531C932116001275BC /* GameSound.wav in Resources */,
 				DFB805961D24748200765338 /* GameSoundWrong.wav in Resources */,
 				97093D461C913506001275BC /* LaunchScreen.storyboard in Resources */,
 				97093D431C913506001275BC /* Assets.xcassets in Resources */,
 				97093D411C913506001275BC /* Main.storyboard in Resources */,
+				DF98E52D1D25893800D13766 /* GameSoundFinished.wav in Resources */,
 				DFB805971D24748200765338 /* GameSoundCorrect.wav in Resources */,
+				DF98E52F1D258A0600D13766 /* GameSoundRetry.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
